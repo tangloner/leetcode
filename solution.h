@@ -13,6 +13,11 @@
 
 class Solution
 {
-	
+public:
+	//Find Minimum in Rotated Sorted Array 
+	int findMin(vector<int> &num);
+
+	//Find Minimum in Rotated Sorted Array II 
+	int findMinII(vector<int> &num);
 };
 #endif
