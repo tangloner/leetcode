@@ -1,7 +1,7 @@
 /*======================================
 	@ tangloner <tangloner@gmail.com>
 	@ minStack.cpp
-`	@ Qustion 1 in Leetcode
+`	@ Qustion "Min Stack" in Leetcode
 ======================================*/
 
 #include "minStack.h"
