@@ -1,3 +1,9 @@
+/*======================================
+	@ tangloner <tangloner@gmail.com>
+	@ minStack.cpp
+`	@ Qustion "Min Stack" in Leetcode
+======================================*/
+
 #include "header.h"
 
 #ifndef MIN_STACK_H
