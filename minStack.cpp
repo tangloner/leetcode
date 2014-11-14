@@ -1,3 +1,9 @@
+/*======================================
+	@ tangloner <tangloner@gmail.com>
+	@ minStack.cpp
+`	@ Qustion 1 in Leetcode
+======================================*/
+
 #include "minStack.h"
 
 void minStack::push(int x)
