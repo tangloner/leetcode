@@ -1,4 +1,4 @@
-# SIMD UCR-Suite
+# Make file for leetcode questions
 CXX = g++ -Wno-deprecated -Wformat -Wsign-compare -Wmaybe-uninitialized 
 OPT ?= -g -O3
 CXXFLAG += -I../include -Wall $(OPT) 
