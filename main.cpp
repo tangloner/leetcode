@@ -1,3 +1,10 @@
+/*********************************************************************
+	* @file main.cpp
+	* @author tangloner <tangloner@gmail.com>
+	* @date Fir Nov 14 2015
+	* @brief main file for testing leetcode questions
+**********************************************************************/
+
 #include "minStack.h"
 
 int main (void)
