@@ -69,6 +69,7 @@ int Solution::maxProduct(int A[], int n)
 //Reverse Words in a String
 void Solution::reverseWords(string &s)
 {
+/*
 	stringstream scin(s);
 	string word, res;
 	while(scin >> word)
@@ -76,6 +77,22 @@ void Solution::reverseWords(string &s)
 		if(res.length() !=0 )
 			word += " ";
 		res = word + res;
+	}
+	s = res;
+*/
+	string res;
+	int j = s.length();
+	for(int i = s.length()-1; i>=0; i--)
+	{
+		if(s[i]==' ')
+			j = i;
+		else if(i==0 || s[i-1] == ' ')
+		{
+			if(res.length()!=0)
+				res +=' ';
+			for(int k=i; k<j; k++)
+				res += s[k];
+		}
 	}
 	s = res;
 }
