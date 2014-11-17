@@ -19,5 +19,8 @@ public:
 
 	//Find Minimum in Rotated Sorted Array II 
 	int findMinII(vector<int> &num);
+
+	//Maximum Product Subarray
+	int maxProduct(int A[], int n);
 };
 #endif

@@ -50,3 +50,18 @@ int Solution::findMinII(vector<int> &num)
 	return num[lo];
 
 }
+
+//Maximum Product Subarray
+int Solution::maxProduct(int A[], int n)
+{
+	int res = A[0], imax = res, imin = res;
+	for(int i=1; i<n; i++)
+	{
+		if(A[i] < 0)
+			swap(imax,imin);
+		imax = max(A[i],imax*A[i]);
+		imin = min(A[i],imin*A[i]);
+		res = max(res, imax);
+	}
+	return res;
+}

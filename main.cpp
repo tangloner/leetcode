@@ -30,7 +30,7 @@ int main (void)
 	cout<<sol->getMin()<<endl;
 */
 	Solution *sol = new Solution();
-	vector<int> num;
+/*	vector<int> num;
 	num.push_back(4);
 	num.push_back(5);
 	num.push_back(6);
@@ -40,5 +40,11 @@ int main (void)
 	num.push_back(2);
 	num.push_back(3);
 	cout<<sol->findMinII(num)<<endl;
+*/
+//	int arr[] = {1,-2,-3,0,7,-8,-2};
+	int arr[] = {-1,-1};
+//	int arr[] = {-2,0,-1};
+	int n = sizeof(arr)/sizeof(int);
+	cout<<sol->maxProduct(arr,n)<<endl;
 	return 0;
 }
