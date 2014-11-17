@@ -42,9 +42,12 @@ int main (void)
 	cout<<sol->findMinII(num)<<endl;
 */
 //	int arr[] = {1,-2,-3,0,7,-8,-2};
-	int arr[] = {-1,-1};
+//	int arr[] = {-1,-1};
 //	int arr[] = {-2,0,-1};
-	int n = sizeof(arr)/sizeof(int);
-	cout<<sol->maxProduct(arr,n)<<endl;
+//	int n = sizeof(arr)/sizeof(int);
+//	cout<<sol->maxProduct(arr,n)<<endl;
+	string s = "the sky is blue";
+	sol->reverseWords(s);
+	cout<<s<<endl;
 	return 0;
 }

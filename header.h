@@ -13,6 +13,9 @@
 #include <queue>
 #include <map>
 #include <deque>
+#include <string>
+#include <cstring>
+#include <sstream>
 
 using namespace std;
 

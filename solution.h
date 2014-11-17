@@ -22,5 +22,8 @@ public:
 
 	//Maximum Product Subarray
 	int maxProduct(int A[], int n);
+	
+	//Reverse Words in a string
+	void reverseWords(string &s);
 };
 #endif
