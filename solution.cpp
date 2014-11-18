@@ -97,3 +97,42 @@ void Solution::reverseWords(string &s)
 	s = res;
 }
 
+//Evaluate Reverse Polish Notation
+int Solution::evalRPN(vector<string> &tokens)
+{
+	int ret=0;
+	stack<int> operand;
+	int a, b;
+	char ops;
+	for(int i=0; i<tokens.size(); i++)
+	{
+		ops = tokens[i][0];
+		if((ops=='+'||ops=='-'||ops=='*'||ops=='/')&&tokens[i].length()==1)
+		{
+			a = operand.top();
+			operand.pop();
+			b = operand.top();
+			operand.pop();
+			if(ops=='+')
+				ret = b + a;
+			else if(ops=='-')
+				ret = b - a;
+			else if(ops=='*')
+				ret = b * a;
+			else if(ops=='/')
+				ret = b/a;
+			operand.push(ret); 
+		}
+		else
+		{
+			operand.push(atoi(tokens[i].c_str()));
+		}
+	}	
+	if(operand.size()==1)
+		return operand.top();
+}
+
+
+
+
+

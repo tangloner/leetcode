@@ -46,8 +46,20 @@ int main (void)
 //	int arr[] = {-2,0,-1};
 //	int n = sizeof(arr)/sizeof(int);
 //	cout<<sol->maxProduct(arr,n)<<endl;
-	string s = "the sky is blue";
-	sol->reverseWords(s);
-	cout<<s<<endl;
+//	string s = "the sky is blue";
+//	sol->reverseWords(s);
+//	cout<<s<<endl;
+	vector<string> tokens;
+	string s = "-1";
+	tokens.push_back(s);
+	s = "1";
+	tokens.push_back(s);
+	s = "*";
+	tokens.push_back(s);
+	s = "-1";
+	tokens.push_back(s);
+	s = "+";
+	tokens.push_back(s);
+	cout<<sol->evalRPN(tokens)<<endl;
 	return 0;
 }

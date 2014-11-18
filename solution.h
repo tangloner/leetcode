@@ -25,5 +25,8 @@ public:
 	
 	//Reverse Words in a string
 	void reverseWords(string &s);
+
+	//Evaluate Reverse Polish Notation
+	int evalRPN(vector<string> &tokens);
 };
 #endif
