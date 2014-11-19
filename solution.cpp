@@ -104,7 +104,8 @@ int Solution::evalRPN(vector<string> &tokens)
 	stack<int> operand;
 	int a, b;
 	char ops;
-	for(int i=0; i<tokens.size(); i++)
+	int size = tokens.size();
+	for(int i=0; i<size; i++)
 	{
 		ops = tokens[i][0];
 		if((ops=='+'||ops=='-'||ops=='*'||ops=='/')&&tokens[i].length()==1)
@@ -132,7 +133,56 @@ int Solution::evalRPN(vector<string> &tokens)
 		return operand.top();
 }
 
+//Max Points on a line
+int Solution::maxPoints(vector<Point> &points)
+{
+	int size = points.size();
+	if(size<3)
+		return size;
 
+	int ret = 0, tmp = 0;
+	double k, b;
 
-
-
+	for(int i=0; i<size; i++)	
+	{
+		tmp = 1;
+		for(int j=i+1; j<size; j++)
+		{
+			if(points[i].x==points[j].x&&points[i].y==points[j].y)
+			{
+				tmp += 1;
+				continue;
+			}
+			else if(points[i].x==points[j].x)
+			{
+				tmp += 1;
+				for(int l=j+1; l<size; l++)
+				{
+					if(points[l].x == points[j].x)
+						tmp += 1;
+				}
+				if(tmp > ret)
+					ret = tmp;
+				tmp = 1;
+			}
+			else
+			{
+				tmp += 1;
+				k= 1.0*(points[i].y-points[j].y)/(points[i].x-points[j].x);
+				b= 1.0*(points[i].x*points[j].y-points[i].y*points[j].x)/(points[i].x-points[j].x);
+				for(int l=j+1; l<size; l++)
+				{
+					if(points[l].y==(points[l].x*k+b))
+						tmp += 1;
+				}
+				if(tmp > ret)
+					ret = tmp;
+				tmp = 1;
+			}
+		}
+		if(tmp > ret)
+			ret = tmp;
+		tmp = 1;
+	}
+	return ret;
+}
