@@ -49,7 +49,7 @@ int main (void)
 //	string s = "the sky is blue";
 //	sol->reverseWords(s);
 //	cout<<s<<endl;
-	vector<string> tokens;
+/*	vector<string> tokens;
 	string s = "-1";
 	tokens.push_back(s);
 	s = "1";
@@ -61,5 +61,16 @@ int main (void)
 	s = "+";
 	tokens.push_back(s);
 	cout<<sol->evalRPN(tokens)<<endl;
+*/
+	vector<Point> points;
+	Point tmp = Point(3,10);
+	points.push_back(tmp);
+	tmp = Point(0,2);
+	points.push_back(tmp);
+	tmp = Point(3,10);
+	points.push_back(tmp);
+	tmp = Point(0,2);
+	points.push_back(tmp);
+	cout<<sol->maxPoints(points)<<endl;
 	return 0;
 }

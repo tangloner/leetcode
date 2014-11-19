@@ -10,6 +10,13 @@
 
 #ifndef SOLUTION_H
 #define SOLUTION_H
+struct Point
+{
+	int x;
+	int y;
+	Point(): x(0),y(0) {}
+	Point(int a, int b) : x(a), y(b){}
+};
 
 class Solution
 {
@@ -28,5 +35,8 @@ public:
 
 	//Evaluate Reverse Polish Notation
 	int evalRPN(vector<string> &tokens);
+
+	//Max Points on a line
+	int maxPoints(vector<Point> &points);
 };
 #endif
