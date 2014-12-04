@@ -62,6 +62,7 @@ int main (void)
 	tokens.push_back(s);
 	cout<<sol->evalRPN(tokens)<<endl;
 */
+/*
 	vector<Point> points;
 	Point tmp = Point(3,10);
 	points.push_back(tmp);
@@ -72,5 +73,15 @@ int main (void)
 	tmp = Point(0,2);
 	points.push_back(tmp);
 	cout<<sol->maxPoints(points)<<endl;
+*/
+	vector<int> numbers;
+	numbers.push_back(3);
+	numbers.push_back(2);
+	numbers.push_back(4);
+//	numbers.push_back(15);
+
+	vector<int> ans = sol->twoSum(numbers,6);
+	cout<<ans[0]<<endl;
+	cout<<ans[1]<<endl;
 	return 0;
 }

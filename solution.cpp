@@ -186,3 +186,43 @@ int Solution::maxPoints(vector<Point> &points)
 	}
 	return ret;
 }
+
+vector<int> Solution::twoSum(vector<int> &numbers, int target)
+{
+	vector<int> ret;
+	vector<locValue> unSort;
+	locValue tmp;
+	int sum=0;
+	for(int i=0; i<numbers.size(); i++)
+	{
+		tmp.loc = i;
+		tmp.val = numbers[i];
+		unSort.push_back(tmp);
+	}
+	sort(unSort.begin(), unSort.end(), locValue());
+	for(int i=0, j=unSort.size()-1; i<j; )
+	{
+		sum = unSort[i].val + unSort[j].val;
+//		cout<<sum<<endl;
+		if(sum < target)
+			i++;
+		else if(sum > target)
+			j--;
+		else
+		{
+			if(unSort[i].loc <= unSort[j].loc)
+			{
+				ret.push_back(unSort[i].loc+1);
+				ret.push_back(unSort[j].loc+1);
+			}
+			else
+			{
+				ret.push_back(unSort[j].loc+1);
+				ret.push_back(unSort[i].loc+1);
+			}
+			break;
+		}
+	}
+	return ret;
+}
+

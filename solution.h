@@ -18,6 +18,16 @@ struct Point
 	Point(int a, int b) : x(a), y(b){}
 };
 
+struct locValue
+{
+	int loc;
+	int val;
+	bool operator() (const locValue& a, const locValue& b)
+	{	
+		return a.val < b.val;
+	}
+};
+
 class Solution
 {
 public:
@@ -38,5 +48,8 @@ public:
 
 	//Max Points on a line
 	int maxPoints(vector<Point> &points);
+	
+	// Two sum
+	vector<int> twoSum(vector<int> &numbers, int target);
 };
 #endif
