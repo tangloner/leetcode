@@ -28,6 +28,22 @@ struct locValue
 	}
 };
 
+struct ListNode
+{
+	int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {};
+};
+
+
+struct TreeNode 
+{
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
 class Solution
 {
 public:
@@ -51,5 +67,23 @@ public:
 	
 	// Two sum
 	vector<int> twoSum(vector<int> &numbers, int target);
+	
+	// Sort List
+	ListNode *sortList(ListNode *head);
+	int countSize(ListNode* head);
+	ListNode* mergeList(ListNode* a, ListNode* b);
+	void halfList(ListNode *head, ListNode **a, ListNode **b);
+
+	// insertion list
+	ListNode *insertionSortList(ListNode *head);
+
+	//postorder Traversal
+	vector<int> postorderTraversal(TreeNode *root);
+	void postorder(TreeNode *root, vector<int> &ret);
+	void post(TreeNode *root, vector<int> &ret);
+
+	//preorder traversal
+	vector<int> preorderTraversal(TreeNode *root);
+	void preorder(TreeNode *root, vector<int> &ret);
 };
 #endif

@@ -74,7 +74,7 @@ int main (void)
 	points.push_back(tmp);
 	cout<<sol->maxPoints(points)<<endl;
 */
-	vector<int> numbers;
+/*	vector<int> numbers;
 	numbers.push_back(3);
 	numbers.push_back(2);
 	numbers.push_back(4);
@@ -83,5 +83,25 @@ int main (void)
 	vector<int> ans = sol->twoSum(numbers,6);
 	cout<<ans[0]<<endl;
 	cout<<ans[1]<<endl;
+*/
+	ListNode a(7);
+	ListNode b(3);
+	ListNode c(6);
+	ListNode d(2);
+	ListNode e(5);
+	ListNode f(4);
+	ListNode g(1);
+	ListNode h(9);
+	
+	a.next = &b;
+	b.next = &c;
+	c.next = &d;
+	d.next = &e;
+	e.next = &f;
+	f.next = &g;
+	g.next = &h;
+	ListNode* head = sol->insertionSortList(&a);
+	cout<< sol->countSize(head)<<endl;
+
 	return 0;
 }

@@ -247,3 +247,183 @@ vector<int> Solution::twoSum(vector<int> &numbers, int target)
 	return ret;
 }
 
+int Solution::countSize(ListNode* head)
+{
+	int n=0;
+	while(head!=NULL)
+	{
+//		cout<<head->val<<"\t";
+		head = head->next;
+		++n;
+	}
+//	cout<<endl;
+//	cout<<n<<endl;
+	return n;
+}
+
+ListNode* Solution::mergeList(ListNode* a, ListNode* b)
+{
+	ListNode* temp;
+	if(!a)
+		return b;
+	if(!b)
+		return a;
+	if(a->val < b->val)
+	{
+		temp = a;
+		temp->next = mergeList(a->next,b);
+	}
+	else
+	{
+		temp = b;
+		temp->next = mergeList(a,b->next);
+	}
+	return temp;
+}
+
+void Solution::halfList(ListNode *head, ListNode **a, ListNode **b)
+{
+
+	int n = countSize(head);
+	*a = head;
+	ListNode* prev = NULL;
+	for(int i=0; i<n/2; i++)
+	{
+		prev = head;
+		head = head->next;
+	}
+	prev->next = NULL;
+	*b = head;
+/*
+	ListNode *fast, *slow, *prev;
+	slow = fast = head;
+	while(fast && fast->next)
+	{
+		prev = slow;
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+	*a = head;
+	*b = slow;
+	prev->next = NULL;
+*/
+}
+
+ListNode* Solution::sortList(ListNode *head)
+{
+	if(!head)
+		return NULL;
+	if(!head->next)
+		return head;
+	ListNode *a, *b;
+	halfList(head,&a,&b);
+	a = sortList(a);
+	b = sortList(b);
+	return mergeList(a,b);	
+}
+
+ListNode* Solution::insertionSortList(ListNode *head)
+{
+	if(!head)
+		return NULL;
+	ListNode* ret = head;
+	head = head->next;
+	ret->next = NULL;
+
+	while(head)
+	{
+		ListNode* toInsert = head;
+		head = head->next;
+		if(toInsert->val < ret->val)
+		{
+			toInsert->next = ret;
+			ret = toInsert;
+		}
+		else
+		{
+			ListNode* current = ret;
+			while((current->next)&&(current->next->val) < toInsert->val)
+				current = current->next;
+			toInsert->next = current->next;
+			current->next  = toInsert;
+		}
+	}
+	return ret;
+}
+
+vector<int> Solution::postorderTraversal(TreeNode *root)
+{
+	vector<int> ret;
+	if(root==NULL)
+		return ret;
+	if(root->left!=NULL)
+		postorder(root->left, ret);
+	if(root->right!=NULL)
+		postorder(root->right,ret);
+	post(root,ret);
+	return ret;
+}
+
+void Solution::postorder(TreeNode *root, vector<int> &ret)
+{
+	if(root->left==NULL&&root->right==NULL)
+		post(root,ret);
+	else if(root->left==NULL&&root->right!=NULL)
+	{
+		postorder(root->right,ret);
+		post(root,ret);
+	}
+
+	else if(root->right==NULL&&root->left!=NULL)
+	{
+		postorder(root->left,ret);
+		post(root,ret);
+	}
+	else
+	{
+		postorder(root->left, ret);
+		postorder(root->right,ret);
+		post(root,ret);
+	}
+}
+
+void Solution::post(TreeNode *root, vector<int> &ret)
+{
+	ret.push_back(root->val);
+}
+
+
+vector<int> Solution::preorderTraversal(TreeNode *root) 
+{
+	vector<int> ret;
+	if(root==NULL)
+		return ret;
+	post(root,ret);
+	if(root->left!=NULL)
+		preorder(root->left, ret);
+	if(root->right!=NULL)
+		preorder(root->right,ret);
+	return ret;
+}
+
+void Solution::preorder(TreeNode *root, vector<int> &ret)
+{
+	if(root->left==NULL&&root->right==NULL)
+		post(root,ret);
+	else if(root->left==NULL&&root->right!=NULL)
+	{
+		post(root,ret);
+		preorder(root->right,ret);
+	}
+	else if(root->right==NULL&&root->left!=NULL)
+	{
+		post(root,ret);
+		preorder(root->left,ret);
+	}
+	else
+	{
+		post(root,ret);
+		preorder(root->left, ret);
+		preorder(root->right,ret);
+	}
+} 
