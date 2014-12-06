@@ -252,11 +252,11 @@ int Solution::countSize(ListNode* head)
 	int n=0;
 	while(head!=NULL)
 	{
-//		cout<<head->val<<"\t";
+		cout<<head->val<<"\t";
 		head = head->next;
 		++n;
 	}
-//	cout<<endl;
+	cout<<endl;
 //	cout<<n<<endl;
 	return n;
 }
@@ -426,4 +426,195 @@ void Solution::preorder(TreeNode *root, vector<int> &ret)
 		preorder(root->left, ret);
 		preorder(root->right,ret);
 	}
-} 
+}
+
+void Solution::reorderList(ListNode *head)
+{
+	if(!head||!head->next||!head->next->next)
+		return;
+	ListNode *a, *b;
+	reverseHalf(head,&a, &b);
+	head = NULL;
+	head = weavingList(a,b);
+	countSize(head);
+}
+
+ListNode* Solution::weavingList(ListNode *a, ListNode *b)
+{
+	if(a==NULL&&b==NULL)
+		return NULL;
+	if(a==NULL)
+		return b;
+	if(b==NULL)
+		return a;
+	else
+	{
+		ListNode *temp, *nexta, *nextb;
+		nexta = a->next;
+		a->next = NULL;
+		nextb = b->next;
+		b->next = NULL;
+		temp = a;
+		temp->next = b;
+		temp->next->next = weavingList(nexta, nextb);
+		return temp;
+	}
+}
+
+void Solution::reverseHalf(ListNode* head, ListNode **a, ListNode **b)
+{
+	int n = countSize(head);
+	*a = head;
+	ListNode* prev = NULL;
+	for(int i=0; i<n/2; i++)
+	{
+		prev = head;
+		head = head->next;
+	}
+	prev->next = NULL;
+//	countSize(*a);
+	prev = NULL;
+	ListNode* t1;
+	while(head!=NULL)
+	{
+		t1 = head->next;
+		head->next = prev;
+		prev = head;
+		head = t1;
+	}
+	*b = prev;
+//	countSize(*b);
+}
+
+bool Solution::hasCycle(ListNode *head)
+{
+	if(head==NULL)
+		return false;
+	map<ListNode*,int> listmap;
+	int i=0;
+	while(head!=NULL)
+	{
+		if(listmap.find(head)!=listmap.end())
+			return true;
+		else
+		{
+			listmap[head] = i;
+			i++;
+			head = head->next;
+		}
+	}
+	return false;
+}
+
+ListNode* Solution::detectCycle(ListNode* head)
+{
+	if(head==NULL)
+		return NULL;
+	map<ListNode*,int> listmap;
+	int i=0;
+	while(head!=NULL)
+	{
+		if(listmap.find(head)!=listmap.end())
+			return head;
+		else
+		{
+			listmap[head] = i;
+			i++;
+			head = head->next;
+		}
+	}
+	return NULL;
+}
+
+bool Solution::hasPathSum(TreeNode *root, int sum) 
+{
+	bool ret = false;
+	if(root==NULL)
+		;
+	else if(root->left==NULL&&root->right==NULL)
+	{
+		if(root->val == sum)
+			ret = true;
+	}
+	else if(root->left==NULL&&root->right != NULL)
+	{
+		sum -= root->val;
+		if(ret==false)
+			ret = hasPathSum(root->right,sum);
+	}
+	else if(root->left!=NULL&&root->right == NULL)
+	{
+		sum -= root->val;
+		if(ret==false)
+			ret = hasPathSum(root->left,sum);
+	}
+	else
+	{
+		sum -= root->val;
+		if(ret==false)
+			ret = hasPathSum(root->right,sum);
+		if(ret==false)
+			ret = hasPathSum(root->left,sum);
+	}
+	return ret;
+}
+
+vector<vector<int> > Solution::pathSum(TreeNode *root, int sum) 
+{
+	vector< vector<int> > ret;
+	vector<int> tmp;
+	treeSum(root,sum,tmp,ret);
+	return ret;
+}
+
+void Solution::leaf_check(TreeNode *root, int sum, vector<int> tmp, vector< vector<int> > &ret)
+{
+	if(root->val == sum)
+	{
+		tmp.push_back(root->val);
+		ret.push_back(tmp);
+	}
+}
+
+void Solution::treeSum(TreeNode *root, int sum, vector<int> tmp, vector< vector<int> > &ret)
+{
+	if(root==NULL)
+		;
+	else if(root->left==NULL && root->right==NULL)
+		leaf_check(root,sum,tmp,ret);
+	else if(root->left!=NULL && root->right==NULL)
+	{
+		sum -= root->val;
+		tmp.push_back(root->val);
+		treeSum(root->left, sum, tmp, ret);
+	}
+	else if(root->left==NULL && root->right!=NULL)
+	{
+		sum -= root->val;
+		tmp.push_back(root->val);
+		treeSum(root->right, sum, tmp, ret);
+	}
+	else
+	{
+		sum -= root->val;
+		tmp.push_back(root->val);
+		treeSum(root->left, sum, tmp, ret);
+		treeSum(root->right, sum, tmp, ret);
+	}
+}
+
+bool Solution::isBalanced(TreeNode *root)
+{
+   if(root==NULL)
+		return true;
+	if(abs(treeheight(root->left)-treeheight(root->right))>1)
+		return false;
+	return isBalanced(root->left) && isBalanced(root->right);
+}
+
+int Solution::treeheight(TreeNode *root)
+{
+	if(root==NULL)
+		return 0;
+	return max(treeheight(root->left),treeheight(root->right))+1;
+}

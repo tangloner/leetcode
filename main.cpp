@@ -88,20 +88,23 @@ int main (void)
 	ListNode b(3);
 	ListNode c(6);
 	ListNode d(2);
-	ListNode e(5);
+/*	ListNode e(5);
 	ListNode f(4);
 	ListNode g(1);
-	ListNode h(9);
+	ListNode h(9);*/
 	
 	a.next = &b;
 	b.next = &c;
-	c.next = &d;
-	d.next = &e;
-	e.next = &f;
+	c.next = NULL;
+//	d.next = NULL;
+/*	e.next = &f;
 	f.next = &g;
 	g.next = &h;
 	ListNode* head = sol->insertionSortList(&a);
 	cout<< sol->countSize(head)<<endl;
-
+*/
+	
+	sol->reorderList(&a);
+//	cout<<sol->countSize(&a)<<endl;
 	return 0;
 }

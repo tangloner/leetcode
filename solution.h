@@ -85,5 +85,25 @@ public:
 	//preorder traversal
 	vector<int> preorderTraversal(TreeNode *root);
 	void preorder(TreeNode *root, vector<int> &ret);
+
+	// reorder list
+	void reorderList(ListNode *head);
+	ListNode* weavingList(ListNode *a, ListNode *b);
+	void reverseHalf(ListNode* head, ListNode **a, ListNode **b);
+
+	// has Cycle
+	bool hasCycle(ListNode *head);
+	ListNode *detectCycle(ListNode* head);
+	
+	//has Path Sum
+	bool hasPathSum(TreeNode *root, int sum);
+	// Path sum record
+	vector<vector<int> > pathSum(TreeNode *root, int sum);
+	void leaf_check(TreeNode *root, int sum, vector<int> tmp, vector< vector<int> > &ret);
+	void treeSum(TreeNode *root, int sum, vector<int> tmp, vector< vector<int> > &ret);
+
+	//is balanced
+	bool isBalanced(TreeNode *root);
+	int treeheight(TreeNode *root);
 };
 #endif
