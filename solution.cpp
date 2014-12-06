@@ -605,7 +605,7 @@ void Solution::treeSum(TreeNode *root, int sum, vector<int> tmp, vector< vector<
 
 bool Solution::isBalanced(TreeNode *root)
 {
-   if(root==NULL)
+	if(root==NULL)
 		return true;
 	if(abs(treeheight(root->left)-treeheight(root->right))>1)
 		return false;
