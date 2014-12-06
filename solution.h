@@ -105,5 +105,8 @@ public:
 	//is balanced
 	bool isBalanced(TreeNode *root);
 	int treeheight(TreeNode *root);
+
+	// min depth
+	int minDepth(TreeNode *root);
 };
 #endif

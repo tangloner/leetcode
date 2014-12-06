@@ -618,3 +618,17 @@ int Solution::treeheight(TreeNode *root)
 		return 0;
 	return max(treeheight(root->left),treeheight(root->right))+1;
 }
+
+int Solution::minDepth(TreeNode *root) 
+{
+	if(root==NULL)
+		return 0;
+	if(root->left==NULL&&root->right==NULL)
+		return 1;
+	if(root->left==NULL&&root->right!=NULL)
+		return 1+minDepth(root->right);
+	if(root->left!=NULL&&root->right==NULL)
+		return 1+minDepth(root->left);
+	else
+		return min(minDepth(root->left)+1,minDepth(root->right)+1);
+}
