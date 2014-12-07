@@ -146,5 +146,7 @@ public:
 	// isvalidBST
 	bool isValidBST(TreeNode *root);
 	bool checkBST(TreeNode* root, int min, int max);
+	//number of unique BST
+	int numTrees(int n);
 };
 #endif
