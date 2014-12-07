@@ -138,5 +138,13 @@ public:
 	int singleNumberII(int A[], int n);
  	//subset
 	vector< vector<int> > subsets(vector<int> &S);
+
+	// isSymmetric (Tree)
+	bool isSymmetric(TreeNode *root);
+	bool twotreeSymmetric(TreeNode *tleft, TreeNode *tright);
+
+	// isvalidBST
+	bool isValidBST(TreeNode *root);
+	bool checkBST(TreeNode* root, int min, int max);
 };
 #endif

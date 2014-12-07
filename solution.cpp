@@ -771,3 +771,66 @@ vector<vector<int> > Solution::subsets(vector<int> &S)
 	}
 	return ret;
 }
+
+bool Solution::isSymmetric(TreeNode *root) 
+{
+	if(root==NULL||(root->left==NULL&&root->right==NULL))
+		return true;
+	else
+		return twotreeSymmetric(root->left, root->right);
+}
+
+bool Solution::twotreeSymmetric(TreeNode *tleft, TreeNode *tright)
+{
+	if(tleft==NULL&&tright==NULL)
+		return true;
+	else if((tleft==NULL&&tright!=NULL)||(tleft!=NULL&&tright==NULL))
+		return false;
+	else if(tleft->val==tright->val)
+	{
+		if(tleft->left==NULL&&tleft->right==NULL&&tright->left==NULL&&tright->right==NULL)
+			return true;
+		else if((tleft->left==NULL&&tright->right!=NULL)||(tleft->left!=NULL&&tright->right==NULL))
+			return false;
+		else if((tleft->right==NULL&&tright->left!=NULL)||(tleft->right!=NULL&&tright->left==NULL))
+			return false;
+		else
+			return twotreeSymmetric(tleft->left,tright->right) && twotreeSymmetric(tleft->right,tright->left);
+	}
+	else 
+		return false;
+}
+
+bool Solution::isValidBST(TreeNode *root)
+{
+	return checkBST(root,INT_MIN, INT_MAX);
+}
+
+bool Solution::checkBST(TreeNode* root, int min, int max)
+{
+	if(root==NULL)
+		return true;
+	else if(root->val<min||root->val>max)
+	{
+		return false;
+	}
+	else
+	{
+		if(root->left!=NULL&&root->left->val==root->val)
+			return false;
+		else if(root->right!=NULL&&root->right->val==root->val)
+			return false;
+		if(root->val==INT_MIN)
+		{
+			return checkBST(root->left,min,root->val) && checkBST(root->right,root->val+1,max);
+		}
+		else if(root->val==INT_MAX)
+		{
+			return checkBST(root->left,min,root->val-1) && checkBST(root->right,root->val,max);
+		}
+		else
+		{
+			return checkBST(root->left,min,root->val-1) && checkBST(root->right,root->val+1,max);
+		}
+	}
+}
