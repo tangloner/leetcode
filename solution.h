@@ -132,6 +132,11 @@ public:
 	vector<Interval> mergeInterval(vector<Interval> &intervals);
 	//Insert Interval
 	vector<Interval> insertInterval(vector<Interval> &intervals, Interval newInterval);
-
+	//Single Number appeared twice
+	int singleNumber(int A[], int n);
+	//Single Number appeared three times
+	int singleNumberII(int A[], int n);
+ 	//subset
+	vector< vector<int> > subsets(vector<int> &S);
 };
 #endif

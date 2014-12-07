@@ -720,3 +720,54 @@ vector<Interval> Solution::insertInterval(vector<Interval> &intervals, Interval 
 		ret.push_back(newInterval);
 	return ret;
 }
+
+
+int Solution::singleNumber(int A[], int n)
+{
+/*	map< int, vector<int> > valMap;
+	for(int i=0; i<n; i++)
+	{
+		if(valMap.find(A[i])==valMap.end())
+		{
+			vector<int> tmp;
+			tmp.push_back(i);
+			valMap[A[i]] = tmp;
+		}    
+		else
+			valMap.erase(A[i]);
+	}
+	return valMap.begin()->first;
+*/
+	for(int i = 1; i < n; ++i)
+		A[0] ^= A[i];
+	return A[0];
+}
+
+int Solution::singleNumberII(int A[], int n) 
+{
+	int ec1=0, ec2=0, ec3=0;
+	for(int i=0; i<n; i++)
+	{
+		ec3 = ec2 & A[i];
+		ec2 = (ec2|(ec1&A[i]))&(~ec3);
+		ec1 = (ec1|A[i])&(~ec3);
+	}
+	return ec1;
+}
+
+vector<vector<int> > Solution::subsets(vector<int> &S) 
+{
+	sort(S.begin(),S.end());
+	int elem_num = S.size();
+	int subset_num = pow(2, elem_num);
+	vector< vector<int> > ret(subset_num,vector<int>());
+	for(int i=0; i<elem_num; i++)
+	{
+		for(int j=0; j<subset_num; j++)
+		{
+			if((j>>i)&1)
+				ret[j].push_back(S[i]);
+		}
+	}
+	return ret;
+}
