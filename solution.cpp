@@ -632,3 +632,91 @@ int Solution::minDepth(TreeNode *root)
 	else
 		return min(minDepth(root->left)+1,minDepth(root->right)+1);
 }
+
+
+void Solution::sortColors(int A[], int n)
+{
+	int start = 0;
+	int end = n - 1;
+	for(int i = 0; i <= end; i++)
+	{
+		if(A[i] == 0 && i != start)
+		{
+			swap(A[i], A[start]);
+			start++;
+			i--;
+		}
+		else if(A[i] == 2 && i != end)
+		{
+			swap(A[i], A[end]);
+			end--;
+			i--;
+		}
+	}
+}
+
+vector<Interval> Solution::mergeInterval(vector<Interval> &intervals) 
+{
+	if(intervals.size()==0||intervals.size()==1)
+		return intervals;
+	sort(intervals.begin(),intervals.end(),compIntvl());
+	vector<Interval> ret;
+	Interval tmp = intervals[0];
+	for(int i=0; i<intervals.size(); i++)
+	{
+		if(tmp.start<=intervals[i].start&&tmp.end>=intervals[i].start)
+		{
+			if(tmp.end<intervals[i].end)
+				tmp.end = intervals[i].end;
+		}
+		else if(tmp.end<intervals[i].start)
+		{
+			ret.push_back(tmp);
+			tmp = intervals[i];
+		}
+	}
+	ret.push_back(tmp);
+	return ret;
+}
+
+
+vector<Interval> Solution::insertInterval(vector<Interval> &intervals, Interval newInterval)
+{
+	vector<Interval> ret;
+	if(intervals.size()==0)
+	{
+		ret.push_back(newInterval);
+		return ret;
+	}
+	bool flag = false;
+	sort(intervals.begin(), intervals.end(), compIntvl());
+	for(int i=0; i<intervals.size(); i++)
+	{
+		if(intervals[i].end<newInterval.start)
+			ret.push_back(intervals[i]);
+		else if(intervals[i].start<=newInterval.start&&intervals[i].end>=newInterval.start)
+		{
+			if(intervals[i].start<newInterval.start)
+				newInterval.start = intervals[i].start;
+			if(intervals[i].end>newInterval.end)
+				newInterval.end = intervals[i].end;
+		}
+		else if(intervals[i].start>=newInterval.start&&intervals[i].end<=newInterval.end)
+			;
+		else if(intervals[i].start>=newInterval.start&&intervals[i].start<=newInterval.end&&intervals[i].end>=newInterval.end)
+		{
+			newInterval.end = intervals[i].end;
+		}
+		else if(intervals[i].start>newInterval.end&&flag==false)
+		{
+			ret.push_back(newInterval);
+			ret.push_back(intervals[i]);
+			flag=true;
+		}
+		else if(intervals[i].start>newInterval.end&&flag==true)
+			ret.push_back(intervals[i]);
+	}
+	if(flag==false)
+		ret.push_back(newInterval);
+	return ret;
+}

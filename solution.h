@@ -44,6 +44,22 @@ struct TreeNode
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+struct Interval
+{
+	int start;
+	int end;
+	Interval(): start(0), end(0) {}
+	Interval(int s, int e): start(s), end(e) {}
+};
+
+struct compIntvl
+{
+	bool operator() (const Interval& a, const Interval& b)
+	{
+		return a.start < b.start;
+	}
+};
+
 class Solution
 {
 public:
@@ -108,5 +124,14 @@ public:
 
 	// min depth
 	int minDepth(TreeNode *root);
+
+	// sort colors
+	void sortColors(int A[], int n);
+	
+	//Merge Intervals
+	vector<Interval> mergeInterval(vector<Interval> &intervals);
+	//Insert Interval
+	vector<Interval> insertInterval(vector<Interval> &intervals, Interval newInterval);
+
 };
 #endif
