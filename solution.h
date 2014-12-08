@@ -60,6 +60,15 @@ struct compIntvl
 	}
 };
 
+struct TreeLinkNode
+{
+	int val;
+	TreeLinkNode *left;
+	TreeLinkNode *right;
+	TreeLinkNode *next;
+	TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL){}
+};
+
 class Solution
 {
 public:
@@ -122,8 +131,10 @@ public:
 	bool isBalanced(TreeNode *root);
 	int treeheight(TreeNode *root);
 
-	// min depth
+	// Minimum Depth of Binary Tree 
 	int minDepth(TreeNode *root);
+	// Maximum Depth of Binary Tree
+	int maxDepth(TreeNode *root);
 
 	// sort colors
 	void sortColors(int A[], int n);
@@ -146,7 +157,35 @@ public:
 	// isvalidBST
 	bool isValidBST(TreeNode *root);
 	bool checkBST(TreeNode* root, int min, int max);
-	//number of unique BST
+	//Unique Binary Search Trees
 	int numTrees(int n);
+
+	//Unique Binary Search Trees II
+	vector<TreeNode *> generateTrees(int n);
+	vector<TreeNode *> generateTree(int from, int to);
+
+	//Sum root to Leaf Numbers
+	int sumNumbers(TreeNode *root);
+	void pathNum(TreeNode *root, int val, vector<int> &pathVal);
+
+	//Recover Binary Search Tree
+	void recoverTree(TreeNode *root);
+	void recover(TreeNode *root, TreeNode* &pre, TreeNode* &a, TreeNode* &b);
+
+	//Populating Next Right Pointers in Each Node
+	void connectTreeNodes(TreeLinkNode *root);
+	
+	//Populating Next Right Pointers in Each Node II
+	void connectTreeNodesII(TreeLinkNode *root);
+
+	//Binary Tree Inorder Traversal
+	vector<int> inorderTraversal(TreeNode *root);
+	void inorder(TreeNode *root, vector<int> &ret);
+
+	//Binary Tree Level Order Traversal 
+	vector<vector<int> > levelOrder(TreeNode *root);
+	
+	//Binary Tree Level Order Traversal II 
+	vector<vector<int> > levelOrderBottom(TreeNode *root);
 };
 #endif

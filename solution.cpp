@@ -633,6 +633,19 @@ int Solution::minDepth(TreeNode *root)
 		return min(minDepth(root->left)+1,minDepth(root->right)+1);
 }
 
+int Solution::maxDepth(TreeNode *root) 
+{
+	if(root==NULL)
+		return 0;
+	if(root->left==NULL&&root->right==NULL)
+		return 1;
+	if(root->left==NULL&&root->right!=NULL)
+		return 1+maxDepth(root->right);
+	if(root->left!=NULL&&root->right==NULL)
+		return 1+maxDepth(root->left);
+	else
+		return max(maxDepth(root->left)+1,maxDepth(root->right)+1);
+}
 
 void Solution::sortColors(int A[], int n)
 {
@@ -848,4 +861,308 @@ int Solution::numTrees(int n)
 		}
 	}
 	return dp[n];
+}
+
+vector<TreeNode *> Solution::generateTrees(int n)
+{
+   return generateTree(1,n);
+}
+
+vector<TreeNode *> Solution::generateTree(int from, int to)
+{
+	vector<TreeNode *> ret;
+	if(to-from < 0)
+	{
+		TreeNode* tmp = NULL;
+		ret.push_back(tmp);
+	}
+	else if(to-from==0)
+	{
+		TreeNode* tmp = new TreeNode(from);
+		ret.push_back(tmp);
+	}
+	else if(to-from > 0)
+	{
+		for(int i=from; i<=to; i++)
+		{
+			vector<TreeNode*> l = generateTree(from,i-1);
+			vector<TreeNode*> r = generateTree(i+1,to);
+			for(int j=0; j<l.size(); j++)
+			{
+				for(int k=0; k<r.size(); k++)
+				{
+					TreeNode* h = new TreeNode(i);
+					h->left = l[j];
+					h->right = r[k];
+					ret.push_back(h);
+				}
+			}
+		}
+	}
+	return ret;
+}
+
+int Solution::sumNumbers(TreeNode *root)
+{
+	if(root==NULL)
+		return 0;
+	else
+	{
+		vector<int> pathVal;
+		int val = 0;
+		pathNum(root,val,pathVal);
+		for(int i=0; i<pathVal.size(); i++)
+		{
+			val += pathVal[i];
+		}
+		return val;
+	}
+}
+
+void Solution::pathNum(TreeNode *root, int val, vector<int> &pathVal)
+{
+	if(root==NULL)
+	{
+		;
+	}
+	else if(root->left==NULL&&root->right==NULL)
+	{
+		pathVal.push_back(val*10+root->val);
+	}
+	else
+	{
+		val = val*10 + root->val;
+		pathNum(root->left,val,pathVal);
+		pathNum(root->right,val,pathVal);
+	}
+}
+
+
+void Solution::recoverTree(TreeNode *root)
+{
+	if(!root)
+		return ;
+	TreeNode *a=NULL, *b=NULL;
+	TreeNode *pre = new TreeNode(INT_MIN);
+	recover(root,pre,a,b);
+	if(a&&b)
+		swap(a->val, b->val);
+}
+
+void Solution::recover(TreeNode *root, TreeNode* &pre, TreeNode* &a, TreeNode* &b)
+{
+	if(root)
+	{
+		recover(root->left,pre,a,b);
+		if(root->val < pre->val)
+		{
+			if(!a) 
+				a=pre;
+			b = root;
+		}
+		pre = root;
+		recover(root->right,pre,a,b);
+	}
+}
+
+void Solution::connectTreeNodes(TreeLinkNode *root)
+{
+	if(root==NULL||(root->left==NULL&&root->right==NULL))
+		;
+	else
+	{
+		queue<TreeLinkNode *> level;
+		TreeLinkNode* tmp;
+		int height = 0;
+		int count = 1;
+		level.push(root);
+		while(!level.empty())
+		{
+			tmp = level.front();
+			level.pop();
+			if(tmp->left!=NULL)
+				level.push(tmp->left);
+			if(tmp->right!=NULL)
+				level.push(tmp->right);
+			if(count < pow(2,height))
+			{
+				tmp->next = level.front();
+				count++;
+			}
+			else
+			{
+				count = 1;
+				tmp->next = NULL;
+				height++;
+			}
+		}
+	}
+}
+
+void Solution::connectTreeNodesII(TreeLinkNode *root) 
+{
+	if(root==NULL||(root->left==NULL&&root->right==NULL))
+		;
+	else
+	{
+		queue< pair<TreeLinkNode *, int> > level;
+		pair<TreeLinkNode*, int> tmp;
+		pair<TreeLinkNode*, int> ptmp;
+		ptmp.first = root;
+		ptmp.second = 0;
+		level.push(ptmp);
+		while(!level.empty())
+		{
+			tmp = level.front();
+			level.pop();
+			if(tmp.first->left!=NULL)
+			{
+				ptmp.first = tmp.first->left;
+				ptmp.second = tmp.second+1;
+				level.push(ptmp);
+			}
+			if(tmp.first->right!=NULL)
+			{
+				ptmp.first = tmp.first->right;
+				ptmp.second = tmp.second+1;
+				level.push(ptmp);
+			}
+			
+			if(level.empty())
+				tmp.first->next = NULL;
+			else if(level.front().second==tmp.second)
+				tmp.first->next = level.front().first;
+			else
+				tmp.first->next = NULL;
+		}
+	}
+}
+
+vector<int> Solution::inorderTraversal(TreeNode *root)
+{
+	vector<int> ret;
+	if(root==NULL)
+		return ret;
+	else
+	{
+		inorder(root->left, ret);
+		ret.push_back(root->val);
+		inorder(root->right,ret);
+	}
+	return ret;
+}
+
+void Solution::inorder(TreeNode *root, vector<int> &ret)
+{
+	if(root==NULL)
+		;
+	else
+	{
+		inorder(root->left, ret);
+		ret.push_back(root->val);
+		inorder(root->right,ret);
+	}
+}
+
+
+vector<vector<int> > Solution::levelOrder(TreeNode *root)
+{
+	vector< vector<int> > ret;
+	if(root==NULL)
+		return ret;
+	else
+	{
+		queue< pair<TreeNode *, int> > level;
+		vector< pair<TreeNode *, int> > all;
+		pair<TreeNode*, int> tmp;
+		pair<TreeNode*, int> ptmp;
+		ptmp.first = root;
+		ptmp.second = 1;
+		level.push(ptmp);
+		all.push_back(ptmp);
+		while(!level.empty())
+		{
+			tmp = level.front();
+			level.pop();
+			if(tmp.first->left!=NULL)
+			{
+				ptmp.first = tmp.first->left;
+				ptmp.second = tmp.second+1;
+				level.push(ptmp);
+				all.push_back(ptmp);
+			}
+			if(tmp.first->right!=NULL)
+			{
+				ptmp.first = tmp.first->right;
+				ptmp.second = tmp.second+1;
+				level.push(ptmp);
+				all.push_back(ptmp);
+			}
+		}
+		for(int i=0; i<all.size(); i++)
+		{
+			if(all[i].second > ret.size())
+			{
+				vector<int> vtmp;
+				ret.push_back(vtmp);
+			}
+			ret[all[i].second-1].push_back(all[i].first->val);
+		}
+		return ret;
+	}
+}
+
+vector<vector<int> > Solution::levelOrderBottom(TreeNode *root) 
+{
+	vector< vector<int> > ret;
+	if(root==NULL)
+		return ret;
+	else
+	{
+		queue< pair<TreeNode *, int> > level;
+		vector< pair<TreeNode *, int> > all;
+		pair<TreeNode*, int> tmp;
+		pair<TreeNode*, int> ptmp;
+		ptmp.first = root;
+		ptmp.second = 1;
+		level.push(ptmp);
+		all.push_back(ptmp);
+		while(!level.empty())
+		{
+			tmp = level.front();
+			level.pop();
+			if(tmp.first->left!=NULL)
+			{
+				ptmp.first = tmp.first->left;
+				ptmp.second = tmp.second+1;
+				level.push(ptmp);
+				all.push_back(ptmp);
+			}
+			if(tmp.first->right!=NULL)
+			{
+				ptmp.first = tmp.first->right;
+				ptmp.second = tmp.second+1;
+				level.push(ptmp);
+				all.push_back(ptmp);
+			}
+		}
+		int height = all[all.size()-1].second;
+		for(int i=all.size()-1; i>=0; i--)
+		{
+			if((height-all[i].second+1) > ret.size())
+			{
+				vector<int> vtmp;
+				ret.push_back(vtmp);
+			}
+			ret[height-all[i].second].push_back(all[i].first->val);
+		}
+		vector< vector<int> > result;
+		for(int i=0; i<ret.size(); i++)
+		{
+			vector<int> rtmp;
+			rtmp.insert(rtmp.begin(),ret[i].rbegin(),ret[i].rend());
+			result.push_back(rtmp);
+		}
+		return result;
+	}
 }
