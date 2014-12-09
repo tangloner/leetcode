@@ -1166,3 +1166,191 @@ vector<vector<int> > Solution::levelOrderBottom(TreeNode *root)
 		return result;
 	}
 }
+
+
+int Solution::maxPathSum(TreeNode *root)
+{
+	int sum = INT_MIN;
+	maxSum(root,sum);
+	return sum;
+}
+
+int Solution::maxSum(TreeNode* root, int& sum)
+{
+	if(root==NULL)
+		return 0;
+	else
+	{
+		int l = maxSum(root->left,sum);
+		int r = maxSum(root->right,sum);
+		if(l<0)
+			l=0;
+		if(r<0)
+			r=0;
+		if(l+r+root->val > sum)
+			sum = l+r+root->val;
+		return root->val += max(l,r);
+	}
+}
+
+//Flatten Binary Tree to Linked List 
+void Solution::flatten(TreeNode *root) 
+{
+	if(root==NULL||(root->left==NULL&&root->right==NULL))
+		return ;
+	if(root->left==NULL)
+	{
+		flatten(root->right);
+		return ;
+	}
+	TreeNode* rNode = root->right;
+	root->right = root->left;
+	root->left = NULL;
+	flatten(root->right);  
+	TreeNode* pNode = root;
+	while(pNode->right!=NULL)
+		pNode = pNode->right;
+	pNode->right = rNode;
+	flatten(rNode);
+}
+
+TreeNode* Solution::sortedArrayToBST(vector<int> &num)
+{
+	if(num.size()==0)
+		return NULL;
+	else
+		return constructBST(num,0,num.size()-1);
+}
+
+TreeNode* Solution::constructBST(vector<int> num,int start, int end)
+{
+	int mid = start + (end-start)/2;
+	TreeNode* root = new TreeNode(num[mid]);
+	if(mid>start)
+		root->left = constructBST(num,start,mid-1);
+	if(mid<end)
+		root->right = constructBST(num,mid+1,end);
+	return root;
+}
+
+
+TreeNode* Solution::buildTree(vector<int> &pre, vector<int> &in) 
+{
+	if(pre.size()==0)
+		return NULL;
+	int ppre=0, pin = 0;
+	TreeNode *root = new TreeNode(pre.at(ppre++));
+	TreeNode *p = NULL;
+	stack<TreeNode *> roots;
+	roots.push(root);
+	while(true)
+	{
+		if(in.at(pin)==roots.top()->val)
+		{
+			p = roots.top();
+			roots.pop();
+			pin++;
+			if(pin==in.size())
+				break;
+			if(roots.size() && in.at(pin)==roots.top()->val)
+				continue;
+			p->right = new TreeNode(pre.at(ppre));
+			ppre++;
+			roots.push(p->right);
+		}
+		else
+		{
+			p = new TreeNode(pre.at(ppre));
+			ppre++;
+			roots.top()->left = p;
+			roots.push(p);
+		}
+	}
+	return root;
+}
+
+TreeNode* Solution::buildTreeII(vector<int> &inorder, vector<int> &postorder) 
+{
+	return buildTree3(inorder, postorder, 0, inorder.size()-1, 0, postorder.size()-1);
+}
+
+TreeNode* Solution::buildTree3(vector<int> &inorder, vector<int> &postorder, int is, int ie, int ps, int pe)
+{
+
+	if(ps > pe)
+		return NULL;
+	TreeNode* root = new TreeNode(postorder[pe]);
+	int pos;
+	for(int i=is; i<=ie; i++)
+	{
+		if(inorder[i]==root->val)
+		{
+			pos = i;
+			break;
+		}
+	}
+	root->left = buildTree3(inorder, postorder, is, pos-1, ps, ps+pos-is-1);
+	root->right = buildTree3(inorder, postorder, pos+1, ie, pe-ie+pos, pe-1);
+	return root;
+}
+
+vector<vector<int> > Solution::zigzagLevelOrder(TreeNode *root) 
+{
+	vector< vector<int> > ret;
+	if(root==NULL)
+		return ret;
+	else
+	{
+		queue< pair<TreeNode *, int> > level;
+		vector< pair<TreeNode *, int> > all;
+		pair<TreeNode*, int> tmp;
+		pair<TreeNode*, int> ptmp;
+		ptmp.first = root;
+		ptmp.second = 1;
+		level.push(ptmp);
+		all.push_back(ptmp);
+		while(!level.empty())
+		{
+			tmp = level.front();
+			level.pop();
+			if(tmp.first->left!=NULL)
+			{
+				ptmp.first = tmp.first->left;
+				ptmp.second = tmp.second+1;
+				level.push(ptmp);
+				all.push_back(ptmp);
+			}
+			if(tmp.first->right!=NULL)
+			{
+				ptmp.first = tmp.first->right;
+				ptmp.second = tmp.second+1;
+				level.push(ptmp);
+				all.push_back(ptmp);
+			}
+		}
+		for(int i=0; i<all.size(); i++)
+		{
+			if(all[i].second > ret.size())
+			{
+				vector<int> vtmp;
+				ret.push_back(vtmp);
+			}
+			ret[all[i].second-1].push_back(all[i].first->val);
+		}
+		vector< vector<int> > result;
+		for(int i=0; i<ret.size(); i++)
+		{
+			vector<int> rtmp;
+			if(i%2==1)
+			{
+				rtmp.insert(rtmp.begin(),ret[i].rbegin(),ret[i].rend());
+			}
+			else
+			{
+				rtmp.insert(rtmp.begin(),ret[i].begin(),ret[i].end());
+			}
+			result.push_back(rtmp);
+		}
+		return result;
+	}
+}

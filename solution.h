@@ -187,5 +187,26 @@ public:
 	
 	//Binary Tree Level Order Traversal II 
 	vector<vector<int> > levelOrderBottom(TreeNode *root);
+
+	//Binary Tree Maximum Path Sum
+	int maxPathSum(TreeNode *root);
+	int maxSum(TreeNode* root, int& sum);
+
+	//Flatten Binary Tree to Linked List 
+	void flatten(TreeNode *root);
+
+	//Convert Sorted Array to Binary Search Tree 
+	TreeNode* sortedArrayToBST(vector<int> &num);
+	TreeNode* constructBST(vector<int> num,int start, int end);
+
+	//Construct Binary Tree from Preorder and Inorder Traversal 
+	TreeNode* buildTree(vector<int> &pre, vector<int> &in);
+
+	//Construct Binary Tree from Inorder and Postorder Traversal
+	TreeNode* buildTreeII(vector<int> &inorder, vector<int> &postorder);
+	TreeNode* buildTree3(vector<int> &inorder, vector<int> &postorder, int is, int ie, int ps, int pe);
+
+	//Binary Tree Zigzag Level Order Traversal
+	vector<vector<int> > zigzagLevelOrder(TreeNode *root);
 };
 #endif
