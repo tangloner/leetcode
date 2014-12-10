@@ -208,5 +208,16 @@ public:
 
 	//Binary Tree Zigzag Level Order Traversal
 	vector<vector<int> > zigzagLevelOrder(TreeNode *root);
+
+	//Word Break
+	bool wordBreak(string s, unordered_set<string> &dict);
+	//Word Break II
+	vector<string> wordBreak2(string s, unordered_set<string> &dict);
+
+
+	//Wildcard Matching 
+	bool isMatch(const char *s, const char *p);
+	void wordhelper(int ind, int len, string str, string s, vector<string> & ret, vector< vector<int> > &dp);
+
 };
 #endif

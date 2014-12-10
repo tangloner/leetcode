@@ -1354,3 +1354,103 @@ vector<vector<int> > Solution::zigzagLevelOrder(TreeNode *root)
 		return result;
 	}
 }
+
+
+bool Solution::wordBreak(string s, unordered_set<string> &dict)
+{
+	string s2 = '#' + s;
+	int len = s2.size();
+	vector<bool> possible(len,0);
+	possible[0] = true;
+	for(int i=1; i<len; i++)
+	{
+		for(int k=0; k<i; k++)
+		{
+			possible[i] = possible[k] && (dict.find(s2.substr(k+1,i-k))!=dict.end());
+			if(possible[i])
+				break;
+		}
+	}
+	return possible[len-1];
+}
+
+bool Solution::isMatch(const char *s, const char *p)
+{
+	const char* star = NULL;
+	const char* ss = s;
+	while(*s)
+	{
+		if((*p=='?')||(*p==*s))
+		{
+			s++;
+			p++;
+			continue;
+		}
+		if(*p=='*')
+		{
+			star = p++;
+			ss = s;
+			continue;
+		}
+		if(star)
+		{
+			p = star+1;
+			s = ++ss;
+			continue;
+		}
+		return false;
+	}
+
+	while(*p=='*')
+		p++;
+	return !*p;
+}
+
+vector<string> Solution::wordBreak2(string s, unordered_set<string> &dict)
+{
+	vector< vector<int> > dp;
+	vector<string> ret;
+	int len  = s.length();
+	for(int i=0; i<len; i++)
+	{
+		vector<int> tmp(len,0);
+		dp.push_back(tmp);
+	}
+	vector<bool> reach(len,false);
+	for(int i=0; i<len; i++)
+	{
+		if(i>0 && !reach[i-1])
+			continue;
+		for(int j=i;j<len; j++)
+		{
+			string sub = s.substr(i,j-i+1);
+			if(dict.find(sub)!=dict.end())
+			{
+				reach[j]=true;
+				dp[i][j] = 1;
+			}
+		}
+	}
+
+	string str = "";
+	if(reach[len-1])
+		wordhelper(0,len,str,s,ret, dp);
+	return ret;
+}
+
+void Solution::wordhelper(int ind, int len, string str, string s, vector<string> & ret, vector< vector<int> > &dp)
+{
+	if(ind==len)
+	{
+		ret.push_back(str.substr(0,str.length()-1));
+		return ;
+	}
+	for(int i=ind; i<len; i++)
+	{
+		if(dp[ind][i] == 1)
+		{
+			string nstr = str + s.substr(ind,i-ind+1) + " ";
+			wordhelper(i+1,len,nstr,s,ret,dp);
+		}
+	}
+}
